@@ -1,0 +1,6 @@
+﻿User ID,Shoe,Size,Color,Coupon,Postal_Code,Payment,Amount
+1,Sneaker,10,Blue,true,51000,Credit,135.67
+2,Boot,9,Black,false,17900,Debit,86.75
+3,Sandal,7,Blue,true,53200,Debit,56.43
+4,Sneaker,12,Grey,true,60900,Credit,135.67
+5,Flat,7,Blue,false,17800,Credit,45.24
