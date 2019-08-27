@@ -33,6 +33,6 @@ exports.maxChars = function(array) {
   var testResults = array.map(x => x.length);
   var max = Math.max.apply(null, testResults);
 
-  // Round up to the next 10;
+  // Round up to the next multiple of 5;
   return Math.ceil(max / 5) * 5;
 };
