@@ -48,7 +48,7 @@ describe('Typer', function() {
       assert.equal(typer.isDecimal(["hello", "2.0", "23.234", "12.12324235"]), false);
     });
     it('should return false when there is an integer value', function() {
-      assert.equal(typer.isDecimal(["1.1", "2.0", "1", "12.12324235"]), false);
+      assert.equal(typer.isDecimal(["1.1", "2.0", "5", "12.12324235"]), false);
     });
     it('should return false when there is a boolean value', function() {
       assert.equal(typer.isDecimal(["1.1", "2.0", "true", "12.12324235"]), false);
@@ -59,14 +59,14 @@ describe('Typer', function() {
   });
 
   describe('#maxChars()', function() {
+    it('should return 0 when the array is empty', function() {
+      assert.equal(typer.maxChars([]), 0);
+    });
     it('should return the correct max characters when given a single value', function() {
       assert.equal(typer.maxChars(["three"]), 5);
     });
     it('should return the correct max characters when given a list', function() {
-      assert.equal(typer.maxChars(["hello", "h", "this is a phrase", "cmon this is too long"]), 21);
-    });
-    it('should return 0 when the array is empty', function() {
-      assert.equal(typer.maxChars([]), 0);
+      assert.equal(typer.maxChars(["hello", "h", "this is a phrase", "cmon this is too long"]), 25);
     });
   });
 });

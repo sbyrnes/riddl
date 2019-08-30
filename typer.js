@@ -7,6 +7,8 @@
 
 // Returns true if the array contains integers
 exports.isInteger = function(array) {
+  if(!array || array.length === 0) return false;
+
   let testResults = array.map(x => !isNaN(parseInt(x)) && x.indexOf('.') == -1);
 
   // Are there any false values? If so return false;
@@ -15,6 +17,8 @@ exports.isInteger = function(array) {
 
 // Returns true if the array contains booleans
 exports.isBoolean = function(array) {
+  if(!array || array.length === 0) return false;
+
   let testResults = array.map(x => x.trim().toUpperCase() === "true".toUpperCase() || x.trim().toUpperCase() === "false".toUpperCase());
 
   // Are there any false values? If so return false;
@@ -23,6 +27,8 @@ exports.isBoolean = function(array) {
 
 // Returns true if the array contains decimals
 exports.isDecimal = function(array) {
+  if(!array || array.length === 0) return false;
+
   let testResults = array.map(x => !isNaN(parseFloat(x)));
 
   // Are there any false values? If so return false;
@@ -31,6 +37,8 @@ exports.isDecimal = function(array) {
 
 // Returns the maximum number of characters from the values in an array
 exports.maxChars = function(array) {
+  if(!array || array.length === 0) return 0;
+
   let testResults = array.map(x => x.length);
   let max = Math.max.apply(null, testResults);
 
