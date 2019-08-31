@@ -7,6 +7,7 @@
 const fs = require('fs');
 const typer = require('./src/typer.js');
 const ddlBuilder = require('./src/ddlBuilder.js');
+const largeFS = require('./src/largeFS.js');
 
 // limit on the number of lines from the CSV to consider
 const LINE_LIMIT = 100;
@@ -25,9 +26,7 @@ let headers = new Map();
 let columns = new Map();
 
 // read in the input CSV file
-// TODO: Only read in LINE_LIMIT lines of the input
-let inputCSV = fs.readFileSync(process.argv[2], 'utf-8');
-let inputCSVlines = inputCSV.trim().split('\n');
+let inputCSVlines = largeFS(process.argv[2], LINE_LIMIT);
 
 // Extract headers from the first line
 let columnNames = inputCSVlines.shift().split(delimiter);
