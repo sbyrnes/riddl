@@ -26,7 +26,7 @@ let headers = new Map();
 let columns = new Map();
 
 // read in the input CSV file
-let inputCSVlines = largeFS(process.argv[2], LINE_LIMIT);
+let inputCSVlines = largeFS.head(process.argv[2], LINE_LIMIT);
 
 // Extract headers from the first line
 let columnNames = inputCSVlines.shift().split(delimiter);

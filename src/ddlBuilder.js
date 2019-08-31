@@ -26,7 +26,7 @@ exports.create = function(headers, tableName) {
   }
 
   // end file
-  if(headers.size > 0) outputDDL = outputDDL.slice(0, outputDDL.length-2); // remove last comma
+  if(headers.size > 0) outputDDL = outputDDL.slice(0, outputDDL.length-2) + "\n"; // remove last comma
   else outputDDL = outputDDL.slice(0, outputDDL.length-1); // remove last return
   outputDDL += ");";
 
