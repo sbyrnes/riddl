@@ -22,8 +22,18 @@ node riddl.js ./test/test.csv
 
 Output:
 ```
-CREATE TABLE {
-	INTEGER User ID,
+Lines analyzed:   100
+Type counts:
+	 INTEGER :   3
+	 VARCHAR :   3
+	 BOOLEAN :   1
+	 DECIMAL :   1
+Empty Columns:   0
+
+DDL:
+
+CREATE TABLE _put_table_name_here_ (
+	INTEGER User_ID,
 	VARCHAR(10) Shoe,
 	INTEGER Size,
 	VARCHAR(5) Color,
@@ -31,5 +41,6 @@ CREATE TABLE {
 	INTEGER Postal_Code,
 	VARCHAR(10) Payment,
 	DECIMAL Amount
-}
+);
+
 ```

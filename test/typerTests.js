@@ -4,6 +4,19 @@ const typer = require('../src/typer.js');
 
 var assert = require('assert');
 describe('Typer', function() {
+  describe('#isEmpty()', function() {
+    it('should return true if there is no values', function() {
+      assert.equal(typer.isEmpty(), true);
+    });
+    it('should return true if the array is empty', function() {
+      assert.equal(typer.isEmpty([]), true);
+    });
+    it('should return true if all values are empty', function() {
+      assert.equal(typer.isEmpty([""]), true);
+      assert.equal(typer.isEmpty(["","",""]), true);
+    });
+  });
+
   describe('#isInteger()', function() {
     it('should return true when all values are integers', function() {
       assert.equal(typer.isInteger(["1", "2", "3234232", "0"]), true);

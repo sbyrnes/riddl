@@ -5,6 +5,15 @@
  * Type checking utilities for arrays of values;
  */
 
+// Returns true if the array contains only empty values
+exports.isEmpty = function(array) {
+  if(!array || array.length === 0) return true;
+
+  // Are there any false values? If so return false;
+  return array.filter(x => x.length > 0).length == 0;
+};
+
+
 // Returns true if the array contains integers
 exports.isInteger = function(array) {
   if(!array || array.length === 0) return false;

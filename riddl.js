@@ -7,8 +7,9 @@
 const fs = require('fs');
 const typer = require('./src/typer.js');
 const ddlBuilder = require('./src/ddlBuilder.js');
-const largeFS = require('./src/largeFS.js');
+const largeFileUtil = require('./src/largeFileUtil.js');
 const statUtil = require('./src/statUtil.js');
+const parseUtil = require('./src/parseUtil.js');
 
 // limit on the number of lines from the CSV to consider
 const LINE_LIMIT = 100;
@@ -22,33 +23,23 @@ if(process.argv[3]) {
   console.log("Using delimiter: " + delimiter);
 }
 
-// Output containers
-let headers = new Map();
-let columns = new Map();
-
 // read in the input CSV file
-let inputCSVlines = largeFS.head(process.argv[2], LINE_LIMIT);
+let inputCSVlines = largeFileUtil.head(process.argv[2], LINE_LIMIT);
 
-// Extract headers from the first line
-let columnNames = inputCSVlines.shift().split(delimiter);
-for(let cn of columnNames) {
-  headers.set(cn, {name: cn.trim(), primary: false, type: "TEXT"});
-  columns.set(cn, []);
-}
-
-// Assemble columns from the row data
-for(let r of inputCSVlines) {
-  let values = r.split(delimiter);
-  for(let i=0;i<values.length;i++) {
-    columns.get(columnNames[i]).push(values[i]);
-  }
-}
+// Parse the input data into column definitions
+const {headers, columns} = parseUtil.parse(inputCSVlines, delimiter);
 
 // Look through columns and identify the type
-for(let cn of columnNames) {
+let blankCounter = 0;
+let blanks = [];
+for(let cn of headers.keys()) {
   let type = "TEXT";
   let column = columns.get(cn);
-  if(typer.isInteger(column)) {
+  if(typer.isEmpty(column)) {
+    type = "VARCHAR(1)";
+    blankCounter += 1;
+    blanks.push(cn)
+  } else if(typer.isInteger(column)) {
     type = "INTEGER";
   } else if(typer.isBoolean(column)) {
     type = "BOOLEAN";
@@ -65,8 +56,12 @@ for(let cn of columnNames) {
 let stats = statUtil.analyze(headers);
 console.log("Lines analyzed: ", '\x1b[32m', LINE_LIMIT, '\x1b[0m');
 console.log("Type counts: ");
-for(let [type, count] of stats) {
+for(const [type, count] of stats) {
   console.log('\t', type, ": ", '\x1b[32m', count, '\x1b[0m');
+}
+console.log("Empty Columns: ", '\x1b[31m', blankCounter, '\x1b[0m');
+for(const blank of blanks) {
+  console.log('\t', '\x1b[31m', blank, '\x1b[0m');
 }
 
 console.log("\nDDL:");

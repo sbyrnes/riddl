@@ -1,6 +1,6 @@
 "use strict";
 /**
- * LargeFS.js
+ * LargeFileUtil.js
  *
  * Utility for working with large files that don't fit entirely in memory.
  */
