@@ -1,0 +1,29 @@
+{
+  "name": "riddl",
+  "version": "1.0.0",
+  "description": "Generates DDL statements for a given CSV file.",
+  "main": "riddl.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbyrnes/riddl.git"
+  },
+  "keywords": [
+    "CSV",
+    "DDL"
+  ],
+  "author": "Sean Byrnes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sbyrnes/riddl/issues"
+  },
+  "homepage": "https://github.com/sbyrnes/riddl#readme",
+  "devDependencies": {
+    "mocha": "^6.2.0"
+  }
+}
