@@ -8,6 +8,7 @@ const fs = require('fs');
 const typer = require('./src/typer.js');
 const ddlBuilder = require('./src/ddlBuilder.js');
 const largeFS = require('./src/largeFS.js');
+const statUtil = require('./src/statUtil.js');
 
 // limit on the number of lines from the CSV to consider
 const LINE_LIMIT = 100;
@@ -60,8 +61,18 @@ for(let cn of columnNames) {
   headers.get(cn).type = type;
 }
 
+// Display statistics
+let stats = statUtil.analyze(headers);
+console.log("Lines analyzed: ", '\x1b[32m', LINE_LIMIT, '\x1b[0m');
+console.log("Type counts: ");
+for(let [type, count] of stats) {
+  console.log('\t', type, ": ", '\x1b[32m', count, '\x1b[0m');
+}
+
+console.log("\nDDL:");
+
 // Print the DDL to STD Output
 let ddl = ddlBuilder.create(headers);
-console.log(ddl);
+console.log("\n"+ddl);
 
 process.exit(1);
