@@ -29,7 +29,7 @@ exports.isBoolean = function(array) {
 exports.isDecimal = function(array) {
   if(!array || array.length === 0) return false;
 
-  let testResults = array.map(x => !isNaN(parseFloat(x)));
+  let testResults = array.map(x => !isNaN(parseFloat(x)) && x.indexOf('.') != -1);
 
   // Are there any false values? If so return false;
   return testResults.filter(bool => bool == false).length == 0;

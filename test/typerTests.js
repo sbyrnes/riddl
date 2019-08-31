@@ -24,19 +24,19 @@ describe('Typer', function() {
 
   describe('#isBoolean()', function() {
     it('should return true when all values are booleans', function() {
-      assert.equal(typer.isDecimal(["true", "false", "false", "true"]), true);
+      assert.equal(typer.isBoolean(["true", "false", "false", "true"]), true);
     });
     it('should return false when there is a string value', function() {
-      assert.equal(typer.isDecimal(["true", "false", "false", "hello"]), false);
+      assert.equal(typer.isBoolean(["true", "false", "false", "hello"]), false);
     });
     it('should return false when there is an integer value', function() {
-      assert.equal(typer.isDecimal(["1", "false", "false", "true"]), false);
+      assert.equal(typer.isBoolean(["1", "false", "false", "true"]), false);
     });
     it('should return false when there is an decimal value', function() {
-      assert.equal(typer.isDecimal(["true", "2.3", "false", "true"]), false);
+      assert.equal(typer.isBoolean(["true", "2.3", "false", "true"]), false);
     });
     it('should return false when the array is empty', function() {
-      assert.equal(typer.isDecimal([]), false);
+      assert.equal(typer.isBoolean([]), false);
     });
   });
 

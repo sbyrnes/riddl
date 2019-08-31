@@ -20,8 +20,25 @@ describe('DDLBuilder', function() {
   });
 
   describe('#create()', function() {
-    it('should have tests', function() {
-      assert.equal(false, true);
+    it('should throw an error if no parameters are provided', function() {
+      assert.throws(() => DDLBuilder.create());
+    });
+    it('should create an empty table if there are no columns', function() {
+      assert.equal(DDLBuilder.create([], "this_table"),
+      "CREATE TABLE this_table ();");
+    });
+    it('should create an empty table if there are no columns and no name', function() {
+      assert.equal(DDLBuilder.create([]),
+      "CREATE TABLE _put_table_name_here_ ();");
+    });
+    it('should properly create a table', function() {
+      let data = new Map();
+      data.set("guid", {name: "guid", type: "INTEGER"});
+      data.set("some chars", {name: "some chars", type: "VARCHAR(5)"});
+      data.set("bool", {name: "bool", type: "BOOLEAN"});
+
+      let ddl = DDLBuilder.create(data, "valid_table");
+      assert.equal(ddl, "CREATE TABLE valid_table (\n\tINTEGER guid,\n\tVARCHAR(5) some_chars,\n\tBOOLEAN bool);");
     });
   });
 });
