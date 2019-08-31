@@ -5,15 +5,14 @@
  * Generates DDL statements for a given CSV file.
  */
 const fs = require('fs');
-const typer = require('./typer.js');
+const typer = require('./src/typer.js');
+const ddlBuilder = require('./src/ddlBuilder.js');
 
 // limit on the number of lines from the CSV to consider
 const LINE_LIMIT = 100;
 
 const DEFAULT_DELIMITER = ',';
 
-// template for the beginning of the DDL
-const DDL_TEMPLATE = "CREATE TABLE { \n";
 
 let delimiter = DEFAULT_DELIMITER;
 if(process.argv[3]) {
@@ -22,7 +21,6 @@ if(process.argv[3]) {
 }
 
 // Output containers
-let outputDDL = DDL_TEMPLATE;
 let headers = new Map();
 let columns = new Map();
 
@@ -63,18 +61,8 @@ for(let cn of columnNames) {
   headers.get(cn).type = type;
 }
 
-// output the columns into the DDL
-for(let c of headers.entries()) {
-  outputDDL += "\t" + c[1].type + " " + c[1].name;
-  if(c.primary) {
-    outputDDL += " PRIMARY KEY"
-  }
-  outputDDL += ",\n";
-}
-
-// end file
-outputDDL = outputDDL.substring(0, outputDDL.length-2) + "\n}";
-
-console.log(outputDDL);
+// Print the DDL to STD Output
+let ddl = ddlBuilder.create(headers);
+console.log(ddl);
 
 process.exit(1);

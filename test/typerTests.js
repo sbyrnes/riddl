@@ -1,6 +1,6 @@
 "use strict";
 
-const typer = require('../typer.js');
+const typer = require('../src/typer.js');
 
 var assert = require('assert');
 describe('Typer', function() {
