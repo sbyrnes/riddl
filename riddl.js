@@ -7,7 +7,7 @@
 const fs = require('fs');
 const typer = require('./src/typer.js');
 const ddlBuilder = require('./src/ddlBuilder.js');
-const largeFS = require('./src/largeFS.js');
+const largeFileUtil = require('./src/largeFileUtil.js');
 const statUtil = require('./src/statUtil.js');
 
 // limit on the number of lines from the CSV to consider
@@ -22,30 +22,14 @@ if(process.argv[3]) {
   console.log("Using delimiter: " + delimiter);
 }
 
-// Output containers
-let headers = new Map();
-let columns = new Map();
-
 // read in the input CSV file
-let inputCSVlines = largeFS.head(process.argv[2], LINE_LIMIT);
+let inputCSVlines = largeFileUtil.head(process.argv[2], LINE_LIMIT);
 
-// Extract headers from the first line
-let columnNames = inputCSVlines.shift().split(delimiter);
-for(let cn of columnNames) {
-  headers.set(cn, {name: cn.trim(), primary: false, type: "TEXT"});
-  columns.set(cn, []);
-}
-
-// Assemble columns from the row data
-for(let r of inputCSVlines) {
-  let values = r.split(delimiter);
-  for(let i=0;i<values.length;i++) {
-    columns.get(columnNames[i]).push(values[i]);
-  }
-}
+// Parse the input data into column definitions
+const {headers, columns} = parseUtils.parse(inputCSVlines, delimiter);
 
 // Look through columns and identify the type
-for(let cn of columnNames) {
+for(let cn of headers.keys()) {
   let type = "TEXT";
   let column = columns.get(cn);
   if(typer.isInteger(column)) {
