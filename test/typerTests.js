@@ -77,25 +77,25 @@ describe('Typer', function() {
 
   describe('#isDate()', function() {
     it('should return true when all values are dates', function() {
-      assert.equal(typer.isDecimal(["2/24/17", "5/7/17","7/1/17","8/25/17"]), true);
+      assert.equal(typer.isDate(["2/24/17", "5/7/17","7/1/17","8/25/17"]), true);
     });
     it('should return false when dates are malformed', function() {
-      assert.equal(typer.isDecimal(["23234/24/17", "5/7/17","7/1/17","8/25/17"]), true);
+      assert.equal(typer.isDate(["23234/24/17", "5/7/17","7/1/17","8/25/17"]), true);
     });
     it('should return true when all values are sql dates', function() {
-      assert.equal(typer.isDecimal(["2018-05-07", "2018-06-17", "2018-07-21", "2018-08-20"]), true);
+      assert.equal(typer.isDate(["2018-05-07", "2018-06-17", "2018-07-21", "2018-08-20"]), true);
     });
     it('should return true when all values are datetimes', function() {
-      assert.equal(typer.isDecimal(["2/24/03 0:00", "5/7/03 0:00", "7/1/03 0:00", "8/25/03 0:00"]), true);
+      assert.equal(typer.isDate(["2/24/03 0:00", "5/7/03 0:00", "7/1/03 0:00", "8/25/03 0:00"]), true);
     });
     it('should return true if date times contain extra information', function() {
-      assert.equal(typer.isDecimal(["2/24/03 0:00 AM", "5/7/03 0:00 PM", "7/1/03 0:00", "8/25/03 0:00"]), true);
+      assert.equal(typer.isDate(["2/24/03 0:00 AM", "5/7/03 0:00 PM", "7/1/03 0:00", "8/25/03 0:00"]), true);
     });
     it('should return false if there are string values', function() {
-      assert.equal(typer.isDecimal(["2/24/17", "hello","7/1/17","8/25/17"]), false);
+      assert.equal(typer.isDate(["2/24/17", "hello","7/1/17","8/25/17"]), false);
     });
     it('should return false if there are integers', function() {
-      assert.equal(typer.isDecimal(["2/24/17", "123124124","7/1/17","8/25/17"]), false);
+      assert.equal(typer.isDate(["2/24/17", "123124124","7/1/17","8/25/17"]), false);
     });
   });
 
