@@ -109,5 +109,42 @@ describe('ParseUtil', function() {
       assert.deepEqual(columns.get("COLUMN_4"), []);
       assert.deepEqual(columns.get("fourth"), ["3.2","5.1","6.3"]);
     });
+    it('should properly handle files that have quoted strings in rows', function() {
+      const {headers, columns} = ParseUtil.parse(
+        ["ID, Product,Address,Amount",
+         "1,Car,\"This address, someplace, else\",-123.12",
+         "2,House,3 hello st, 5.1",
+         "3,Phone,56 bye ave #34, 6.3"
+        ],
+        ',');
+      assert.equal(columns.size, 4);
+      assert.deepEqual(columns.get("ID"), ["1","2","3"]);
+      assert.deepEqual(columns.get("Product"), ["Car","House","Phone"]);
+      assert.deepEqual(columns.get("Address"), ["This address, someplace, else","3 hello st","56 bye ave #34"]);
+      assert.deepEqual(columns.get("Amount"), ["-123.12","5.1","6.3"]);
+    });
+  });
+  describe('#safeSplit()', function() {
+    it('should throw an error if no text is provided', function() {
+      assert.throws(() => ParseUtil.safeSplit());
+    });
+    it('should return empty if the input is empty', function() {
+      assert.deepEqual(ParseUtil.safeSplit(''),[]);
+    });
+    it('should properly split a comma delimited string', function() {
+      assert.deepEqual(ParseUtil.safeSplit("hello,bye, 123, this is text", ","),["hello","bye", "123", "this is text"]);
+    });
+    it('should properly split a comma delimited string with missing values', function() {
+      assert.deepEqual(ParseUtil.safeSplit("hello,bye,, , this is text", ","),["hello","bye", "", "", "this is text"]);
+    });
+    it('should properly split a comma delimited string with quotation sections', function() {
+      assert.deepEqual(ParseUtil.safeSplit("hello,bye,\"3 hello st, oakland, ca\", this is text", ","),["hello","bye", "3 hello st, oakland, ca", "this is text"]);
+    });
+    it('should properly split a pipe delimited string', function() {
+      assert.deepEqual(ParseUtil.safeSplit("hello|bye| 123| this is text", "|"),["hello","bye", "123", "this is text"]);
+    });
+    it('should properly split a tab delimited string', function() {
+      assert.deepEqual(ParseUtil.safeSplit("hello\tbye\t 123\t this is text", "\t"),["hello","bye", "123", "this is text"]);
+    });
   });
 });

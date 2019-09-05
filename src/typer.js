@@ -38,7 +38,19 @@ exports.isBoolean = function(array) {
 exports.isDecimal = function(array) {
   if(!array || array.length === 0) return false;
 
-  let testResults = array.map(x => !isNaN(parseFloat(x)) && x.indexOf('.') != -1);
+  let testResults = array.map(x => !isNaN(parseFloat(x)));
+
+  // Are there any false values? If so return false;
+  return testResults.filter(bool => bool == false).length == 0;
+};
+
+// Returns true if the array contains dates
+const SQL_DATE_REGEX = /\d{4,}-\d{2,}-\d{2,}/i;
+const GREGORIAN_DATE_REGEX = /\d+\/\d+\/\d+/i;
+exports.isDate = function(array) {
+  if(!array || array.length === 0) return false;
+
+  let testResults = array.map(x => SQL_DATE_REGEX.test(x) || GREGORIAN_DATE_REGEX.test(x));
 
   // Are there any false values? If so return false;
   return testResults.filter(bool => bool == false).length == 0;

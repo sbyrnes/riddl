@@ -12,7 +12,7 @@ const statUtil = require('./src/statUtil.js');
 const parseUtil = require('./src/parseUtil.js');
 
 // limit on the number of lines from the CSV to consider
-const LINE_LIMIT = 100;
+const LINE_LIMIT = 500;
 
 const DEFAULT_DELIMITER = ',';
 
@@ -39,7 +39,9 @@ for(let cn of headers.keys()) {
     type = "VARCHAR(1)";
     blankCounter += 1;
     blanks.push(cn)
-  } else if(typer.isInteger(column)) {
+  } else if(typer.isDate(column)) {
+    type = "DATE";
+  }  else if(typer.isInteger(column)) {
     type = "INTEGER";
   } else if(typer.isBoolean(column)) {
     type = "BOOLEAN";

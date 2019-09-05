@@ -8,7 +8,7 @@
 var fs = require('fs');
 
 // Default number of lines to read
-const DEFAULT_LINES_TO_READ = 100;
+const DEFAULT_LINES_TO_READ = 500;
 const BUFFER_SIZE = 10;
 
 // Returns true if the array contains integers
