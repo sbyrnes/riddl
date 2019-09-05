@@ -45,7 +45,6 @@ exports.isDecimal = function(array) {
 };
 
 // Returns true if the array contains dates
-//const SQL_DATE_REGEX = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/i;
 const SQL_DATE_REGEX = /\d{4,}-\d{2,}-\d{2,}/i;
 const GREGORIAN_DATE_REGEX = /\d+\/\d+\/\d+/i;
 exports.isDate = function(array) {
