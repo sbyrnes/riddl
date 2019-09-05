@@ -18,7 +18,7 @@ exports.create = function(headers, tableName) {
 
   // output the columns into the DDL
   for(let [name, entry] of headers) {
-    outputDDL += "\t" + entry.type + " " + exports.formatHeader(entry.name);
+    outputDDL += "\t" + exports.formatHeader(entry.name) + " " + entry.type;
     if(entry.primary) {
       outputDDL += " PRIMARY KEY"
     }

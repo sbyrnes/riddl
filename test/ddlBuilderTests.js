@@ -38,7 +38,7 @@ describe('DDLBuilder', function() {
       data.set("bool", {name: "bool", type: "BOOLEAN"});
 
       let ddl = DDLBuilder.create(data, "valid_table");
-      assert.equal(ddl, "CREATE TABLE valid_table (\n\tINTEGER guid,\n\tVARCHAR(5) some_chars,\n\tBOOLEAN bool\n);");
+      assert.equal(ddl, "CREATE TABLE valid_table (\n\tguid INTEGER,\n\tsome_chars VARCHAR(5),\n\tbool BOOLEAN\n);");
     });
   });
 });
