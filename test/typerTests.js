@@ -34,6 +34,9 @@ describe('Typer', function() {
       assert.equal(typer.isInteger(["1", "2.234", "12/23/2018", "0"]), false);
       assert.equal(typer.isInteger(["1", "2.234", "2002-12-01", "0"]), false);
     });
+    it('should return false when the array is full of zeros', function() {
+      assert.equal(typer.isInteger(["0", "0", "0", "0"]), false);
+    });
     it('should return false when the array is empty', function() {
       assert.equal(typer.isInteger([]), false);
     });
@@ -72,6 +75,15 @@ describe('Typer', function() {
     });
     it('should return false when the array is empty', function() {
       assert.equal(typer.isDecimal([]), false);
+    });
+    it('should return true when the array is full of zeroes', function() {
+      assert.equal(typer.isDecimal(["0","0","0","0"]), true);
+    });
+    it('should return true if the field is full of currencies', function() {
+      assert.equal(typer.isDecimal(["$25.43","$1,202.23","€234.23","¥1.23","£29,323.23"]), true);
+    });
+    it('should return true if the field is full of percentages', function() {
+      assert.equal(typer.isDecimal(["13%","2.3%","0.4%","2%"]), true);
     });
   });
 
