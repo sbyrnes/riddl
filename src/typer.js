@@ -18,6 +18,9 @@ exports.isEmpty = function(array) {
 exports.isInteger = function(array) {
   if(!array || array.length === 0) return false;
 
+  // if all entries are zero we can't know if these are integers or not
+  if(array.filter(val => val == "0").length == array.length) return false;
+
   let testResults = array.map(x => !isNaN(parseInt(x)) && x.indexOf('.') == -1);
 
   // Are there any false values? If so return false;
@@ -38,7 +41,10 @@ exports.isBoolean = function(array) {
 exports.isDecimal = function(array) {
   if(!array || array.length === 0) return false;
 
-  let testResults = array.map(x => !isNaN(parseFloat(x)));
+  // if all entries are zero we have to assume the field is decimal
+  if(array.filter(val => val == "0").length == array.length) return true;
+
+  let testResults = array.map(x => !isNaN(parseFloat(x.replace(/[^0-9\.\,\-]+/g,""))));
 
   // Are there any false values? If so return false;
   return testResults.filter(bool => bool == false).length == 0;
