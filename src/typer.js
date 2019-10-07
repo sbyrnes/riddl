@@ -37,6 +37,7 @@ exports.isBoolean = function(array) {
   return testResults.filter(bool => bool == false).length == 0;
 };
 
+const DECIMAL_REGEX = /^[$€¥£]?[0-9\,]+\.?[0-9]*\%?$/i;
 // Returns true if the array contains decimals
 exports.isDecimal = function(array) {
   if(!array || array.length === 0) return false;
@@ -44,7 +45,7 @@ exports.isDecimal = function(array) {
   // if all entries are zero we have to assume the field is decimal
   if(array.filter(val => val == "0").length == array.length) return true;
 
-  let testResults = array.map(x => !isNaN(parseFloat(x.replace(/[$€¥£]+/g,""))));
+  let testResults = array.map(x => DECIMAL_REGEX.test(x));
 
   // Are there any false values? If so return false;
   return testResults.filter(bool => bool == false).length == 0;
