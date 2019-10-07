@@ -85,6 +85,9 @@ describe('Typer', function() {
     it('should return true if the field is full of percentages', function() {
       assert.equal(typer.isDecimal(["13%","2.3%","0.4%","2%"]), true);
     });
+    it('should return false when the values are software versions', function() {
+      assert.equal(typer.isDecimal(["1.1.0", "2.0.1", "3.4.6", "12..1.2.4"]), false);
+    });
   });
 
   describe('#isDate()', function() {
